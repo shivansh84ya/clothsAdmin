@@ -1,0 +1,28 @@
+App.css
+.admin-home {
+    padding: 20px;
+  }
+  
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .box {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .box i {
+    margin-top: 10px;
+    font-size: 24px;
+  }
+  
+
+  .graph-container {
+    width: 80%;
+    margin: 20px auto;
+  }
