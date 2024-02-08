@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import AdminHome from "./Admin/AdminHome"
+// import YourComponent from "./Admin/AdminHome"
 import App from './AdminApp'; //Admin page
 // import App from '../src/Components/AppAccount'; //user profile
 
@@ -10,7 +10,7 @@ import App from './AdminApp'; //Admin page
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <AdminHome/> */}
+    {/* <App/> */}
     <App/>
 
   </React.StrictMode>

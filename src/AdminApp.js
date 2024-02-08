@@ -11,6 +11,7 @@ import AllOrdersPage from "./Admin/AdminOrders";
 // import Product from "./Components/Product";
 // import Categories from "./Components/Categories";
 // import AboutUs from "./Components/AboutUs";
+import YourComponent from "./Admin/AdminHome"
 
 
 const App=()=>{
@@ -19,7 +20,7 @@ const App=()=>{
     <div>
      <BrowserRouter>
      <Routes>
-      <Route path="/" element={<Layout/>}>
+      <Route path="/" element={<YourComponent/>}>
       <Route index element={<Dashboard/>}/>
       <Route path="/AdminDashboard" element={<Dashboard/>}/>
       <Route path="/addproduct" element={<AddProduct/>}/>

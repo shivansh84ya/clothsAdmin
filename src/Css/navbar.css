@@ -13,6 +13,7 @@
   display: flex;
   width: 50px;
   height: 600px;
+  border: 2px solid red;
   justify-content: space-between;
   /* background-image: url('bgimg3.webp'); */
   background-size: cover;

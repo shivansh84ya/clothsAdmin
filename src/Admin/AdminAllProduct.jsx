@@ -1,6 +1,6 @@
 // AllProductsPage.js
-
 import React from 'react';
+import './admin.css'; // Import the CSS file
 import ProductCard from './ProductCart';
 
 const products = [
@@ -58,9 +58,9 @@ const products = [
 
 const AllProductsPage = () => {
   return (
-    <div style={styles.container}>
+    <div className='allproduct-container'>
       {products.map((product, index) => (
-        <div key={index} style={styles.productRow}>
+        <div key={index}  className="productRow">
           <ProductCard product={product} />
         </div>
       ))}
@@ -70,18 +70,20 @@ const AllProductsPage = () => {
 };
 
 const styles = {
-  container: {
-    padding: '20px',
-    // border:"2px solid red"
-    marginLeft:"200px"
-  },
-  productRow: {
-    fontSize:"20px",
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '20px',
-    // border:"2px solid red"
-  },
+  // container: {
+  //   padding: '20px',
+  //   // border:"2px solid red"
+  //   marginLeft:"300px"
+  // },
+  // productRow: {
+  //   fontSize:"20px",
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   marginBottom: '20px',
+  //   // border:"2px solid red"
+  // },
+
+  
 };
 
 export default AllProductsPage;

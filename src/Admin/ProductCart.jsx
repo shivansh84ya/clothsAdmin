@@ -6,11 +6,12 @@ const ProductCard = ({ product }) => {
   const { name, description, sizes, quantity, price, image } = product;
 
   return (
-    <div style={styles.productCard}>
+  <div className='grid-product'>
+  <div className='productCard'>
       <div style={styles.productImage}>
-        <img src={image} alt={name} style={styles.image} />
+        <img src={image} alt={name} id='productImage' />
       </div>
-      <div style={styles.productDetails}>
+      <div className="productDetails">
         <h2>{name}</h2>
         <p>{description}</p>
         <p>Sizes: {sizes.join(', ')}</p>
@@ -21,19 +22,12 @@ const ProductCard = ({ product }) => {
         <button id='btn2'>Out Of Stock</button>
       </div>
     </div>
+  </div>
   );
 };
 
 const styles = {
-  productCard: {
-    display: 'flex',
-    width:"800px",
-    // margin:"auto",
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '8px',
-    // overflow: 'hidden',
-    backgroundColor: 'rgb(239, 239, 239)',
-  },
+
   productImage: {
     flex: '1',
   },

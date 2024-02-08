@@ -9,7 +9,7 @@ const Dashboard = () => {
  
     <><center>
         
-        <h1>This is Admin Deshboard</h1>
+        <h1>This is Admin Descvbnhboard</h1>
         
         </center>  	</>
  )

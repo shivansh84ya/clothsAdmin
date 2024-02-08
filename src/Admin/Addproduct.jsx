@@ -26,33 +26,30 @@ import './admin.css'; // Import the CSS file
 
         return (
             <>
-            <center><h1>Add Product</h1></center>
+            <center><h1 style={{color:'#ffC107'}}>Add Product</h1></center>
     
     
     <div className="productcontainer">
 
-                Enter Product Name :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id='inputbox' /><br />
-                <br />  Enter Product Description :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="textbox" id='inputbox'/><br />
-                <br />Enter Product Categorie :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select id='Categorie-select'>
-
-                    <option value="">Jeans</option>
+                <label className='label1'> Product Name</label> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id='inputbox' /><br />
+                <br />  <label className='label1'> Product Description </label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="textbox" id='inputbox'/><br />
+                <br /><label className='label1'> Product Categorie</label> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select id='Categorie-select'>
+                <br />
+                    <option value="" id='Categorie-select'>Jeans</option>
                     <option value="">T-shirt</option>
                     <option value="">jackets</option>
                     <option value="">Jeans</option>
                     <option value="">Jeans</option>
                     <option value="">Jeans</option>
-
-
                 </select>
-            
-            <br />
-
-                Enter Size   :
+              <br />
+                <label className='size label1'>Enter Size   :</label>
+                <br /><br />
     
             <div id="size">
                 <div  style={{display:"flex"}}>
-                    <h3>S</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <p style={{fontSize:"15px"}}>Qty:</p>
+                    <h3 className='label1'>S</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p style={{fontSize:"15px",color:'#ffC107'}}>Qty:</p>
                     <select>
                     {number.map((key)=>{
                         return  <option>{key}</option>
@@ -60,8 +57,8 @@ import './admin.css'; // Import the CSS file
                     </select>
                 </div>
                 <div  style={{display:"flex"}}>
-                    <h3>M</h3>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <p style={{fontSize:"15px"}}>Qty:</p>
+                    <h3 className='label1'>M</h3>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p style={{fontSize:"15px",color:'#ffC107'}} >Qty:</p>
                     <select>
                     {number.map((key)=>{
                         return <option>{key}</option>
@@ -69,8 +66,8 @@ import './admin.css'; // Import the CSS file
                     </select>
                 </div>
                 <div  style={{display:"flex"}}>
-                    <h3>L</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <p style={{fontSize:"15px"}}>Qty:</p>
+                    <h3 className='label1'>L</h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p style={{fontSize:"15px",color:'#ffC107'}}>Qty:</p>
                     <select>
                     {number.map((key)=>{
                         return <option>{key}</option>
@@ -78,8 +75,8 @@ import './admin.css'; // Import the CSS file
                     </select>
                 </div>
                 <div  style={{display:"flex"}}>
-                    <h3>XL</h3>&nbsp;&nbsp;
-                    <p style={{fontSize:"15px"}}>Qty:</p>
+                    <h3 className='label1'>XL</h3>&nbsp;&nbsp;
+                    <p style={{fontSize:"15px",color:'#ffC107'}}>Qty:</p>
                     <select>
                     {number.map((key)=>{
                         return <option>{key}</option>
@@ -89,8 +86,8 @@ import './admin.css'; // Import the CSS file
     
             </div>
                
-             <br />   Enter Product Price  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id='inputbox'/><br/>
-              <br />  Enter Regular Price  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id='inputbox'/><br/>
+             <br />    <label className='label1'>Product Price </label> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id='inputbox'/><br/>
+              <br />    <label className='label1'>Regular Price </label> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="number" id='inputbox'/><br/>
     
      <br /><br />
 
@@ -105,10 +102,13 @@ import './admin.css'; // Import the CSS file
             </span>{' '}
             Select Image {i} :
           </label>
+          
           <input type="file" id={`image${i}`} name={`image${i}`} accept="image/*" className="fileInput" required />
-        </div>
+          <br/> </div>
+        
       ))}
       </div> 
+    
       <button type="button" onClick={uploadImages} className="uploadButton">
         Upload Images
       </button>
