@@ -101,6 +101,38 @@ const products = [
     price: 39.99,
     image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
   },
+  {
+    name: 'Product 2',
+    description: 'Description of Product 2',
+    sizes: ['M', 'L', 'XL'],
+    quantity: 15,
+    price: 39.99,
+    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
+  },
+  {
+    name: 'Product 2',
+    description: 'Description of Product 2',
+    sizes: ['M', 'L', 'XL'],
+    quantity: 15,
+    price: 39.99,
+    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
+  },
+  {
+    name: 'Product 2',
+    description: 'Description of Product 2',
+    sizes: ['M', 'L', 'XL'],
+    quantity: 15,
+    price: 39.99,
+    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
+  },
+  {
+    name: 'Product 2',
+    description: 'Description of Product 2',
+    sizes: ['M', 'L', 'XL'],
+    quantity: 15,
+    price: 39.99,
+    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
+  },
   // Add more products as needed
 ];
 
