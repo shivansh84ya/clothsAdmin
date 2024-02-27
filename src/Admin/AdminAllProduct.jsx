@@ -1,178 +1,47 @@
 // AllProductsPage.js
-import React from 'react';
+import React, { useState } from 'react';
 import './admin.css'; // Import the CSS file
 import ProductCard from './ProductCart';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-const products = [
-  // Sample product data
-  {
-    name: 'Product 1',
-    description: 'Description of Product 1',
-    sizes: ['S', 'M', 'L'],
-    quantity: 10,
-    price: 29.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
-  {
-    name: 'Product 2',
-    description: 'Description of Product 2',
-    sizes: ['M', 'L', 'XL'],
-    quantity: 15,
-    price: 39.99,
-    image: 'https://www.nextdirect.com/nxtcms/resource/blob/5821518/d114a8023263017f86b11c206949508e/shackets-data.jpg',
-  },
- 
-  // Add more products as needed
-];
+
+
 
 const AllProductsPage = () => {
+  
+
+ const [proData,setProData] = useState([]);  
+
+// Fetching data from server
+const  loadProductData= async ()=>{
+  
+  await axios.get("http://localhost:8000/AdminproductDisplay").then((res)=>{
+    console.log(res.data);
+    setProData(res.data)
+  }).catch((error)=>{
+    console.log("Error While Featching Data",error);
+  })
+}
+
+useEffect(()=>{
+  loadProductData()
+},[])
+ 
+
+const products = proData.map((product, index) => (
+  <div key={index}  className="productRow">
+    <ProductCard product={product} />
+  </div>
+))
+
   return (
     <div className='allproduct-container'>
-      {products.map((product, index) => (
-        <div key={index}  className="productRow">
-          <ProductCard product={product} />
-        </div>
-      ))}
-      
+     {products}
     </div>
   );
 };
 
-const styles = {
-  // container: {
-  //   padding: '20px',
-  //   // border:"2px solid red"
-  //   marginLeft:"300px"
-  // },
-  // productRow: {
-  //   fontSize:"20px",
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   marginBottom: '20px',
-  //   // border:"2px solid red"
-  // },
 
-  
-};
 
 export default AllProductsPage;
