@@ -51,40 +51,40 @@ const YourComponent = () => {
             <ul className="menu-links">
           
               {/* Add other list items as needed */}
-              <li class="nav-link">
+              <li className="nav-link">
               <a href="#">
-                <i class="bx bx-home-alt icons"></i>
-               <Link class="text nav-text" to="AdminDashboard">Dashboard</Link> 
+                <i className="bx bx-home-alt icons"></i>
+               <Link className="text nav-text" to="AdminDashboard">Dashboard</Link> 
               </a>
             </li>
-            <li class="nav-link">
+            <li className="nav-link">
               <a href="#">
-                <i class="bx bx-bar-chart-alt-2 icons"></i>
-                <Link class="text nav-text" to="allproduct">All Product</Link> 
+                <i className="bx bx-bar-chart-alt-2 icons"></i>
+                <Link className="text nav-text" to="allproduct">All Product</Link> 
               </a>
             </li>
-            <li class="nav-link">
+            <li className="nav-link">
               <a href="#">
-                <i class="bx bx-plus icons"></i>
-               <Link class="text nav-text" to="addproduct">Add Product</Link>
+                <i className="bx bx-plus icons"></i>
+               <Link className="text nav-text" to="addproduct">Add Product</Link>
               </a>
             </li>
-            <li class="nav-link">
+            <li className="nav-link">
               <a href="#">
-                <i class="bx bx-pie-chart-alt icons"></i>
-               <Link class="text nav-text"  to="allorder">Orders</Link>
+                <i className="bx bx-pie-chart-alt icons"></i>
+               <Link className="text nav-text"  to="allorder">Orders</Link>
               </a>  
             </li>
-            <li class="nav-link">
+            <li className="nav-link">
               <a href="#">
-                <i class="bx bx-user icons"></i>
-                <Link class="text nav-text" to="users">Users</Link>
+                <i className="bx bx-user icons"></i>
+                <Link className="text nav-text" to="users">Users</Link>
               </a>
             </li>
-            <li class="nav-link">
-              <a href="#">
-                <i class="bx bx-wallet-alt icons"></i>
-                <Link class="text nav-text" to="coupon">Add coupon</Link>
+            <li className="nav-link">
+              <a href="#" >
+                <i className="bx bx-wallet-alt icons"></i>
+                <Link className="text nav-text" to="coupon">Add coupon</Link>
               </a>
             </li>
             </ul>

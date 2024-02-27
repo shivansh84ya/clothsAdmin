@@ -48,6 +48,12 @@ body.dark {
 }
 /* Reusable CSS */
 
+
+.add-product-container{
+  width: 60%;
+  margin-left: 30%;
+}
+
 .sidebar .text {
   font-size: 16px;
   font-weight: 500;
@@ -64,8 +70,26 @@ body.dark {
   align-items: center;
 }
 
+.label{
+  color: #b18500;
+}
+
+.select-box{
+  width: 100%;
+}
+
+.size-option{
+  margin-left: 20%;
+  color: #b18500;
+
+}
+.size-select{
+  width: 20%;
+  margin-left: 30%;
+}
+
 .bottom-content{
-  margin-top: 300px;
+  margin-top: 220px;
 }
 
 /* Sidebar */
@@ -273,4 +297,27 @@ body.dark .search-bar input {
 
 .sidebar.close .toggle {
   transform: translateY(-50%);
+}
+
+.add-product-button{
+  width: 100%;
+  margin-top: 3%;
+  height: 43px;
+}
+.add-product-button:hover{
+  background-color: #ffc107 !important;
+  color: black !important;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  width: 180px;
+  border-radius: 25px;
+  height: 250px;
+  margin: 20px;
+  margin-bottom: 10px;
 }
