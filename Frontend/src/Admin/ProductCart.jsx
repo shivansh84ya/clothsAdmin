@@ -4,7 +4,7 @@ import React from 'react';
 
 const ProductCard = ({ product }) => {
   const { name, description, size, regularPrice, price, images } = product;
-  console.log(images)
+  // console.log(images)
   // for(let i=0;i<3;i++){
   //   if(image[i]){
   //     var img = document.write(`<img src=${image[i]} height="250" width="250"/>`)

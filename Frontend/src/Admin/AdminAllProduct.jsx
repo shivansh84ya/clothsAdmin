@@ -5,9 +5,6 @@ import ProductCard from './ProductCart';
 import { useEffect } from 'react';
 import axios from 'axios';
 
-
-
-
 const AllProductsPage = () => {
   
 
@@ -41,7 +38,5 @@ const products = proData.map((product, index) => (
     </div>
   );
 };
-
-
 
 export default AllProductsPage;
