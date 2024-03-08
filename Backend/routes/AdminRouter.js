@@ -9,4 +9,6 @@ router.post("/Adminaddproduct",AdminProductController.AdminSave)
 
 router.get("/AdminproductDisplay",AdminProductController.AdminproductDisplay )
 
+router.delete("/api/AdminProductModel/:id",AdminProductController.AdminproductDelete)
+
 module.exports=router;

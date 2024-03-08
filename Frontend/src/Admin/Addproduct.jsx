@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Input, Select, Upload, Button, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './admin.css'; // Import the CSS file
+import { useNavigate } from "react-router-dom";
+
 import axios from 'axios';
 
 const { Option } = Select;
@@ -20,6 +22,9 @@ const AddProduct = () => {
     const [sizes, setSizes] = useState(Array(4).fill(0));
 
 
+    const navigate = useNavigate();
+
+
     const HandelProductSubmit = async () => {
       try {
         const formData = new FormData();
@@ -34,13 +39,6 @@ const AddProduct = () => {
           console.log('Image Upload:', response.data);
           console.log('Image URL:', response.data.url);
           setImgUrl(response.data.url);
-          
-          // // You can save the image URL or perform further operations here
-          // // let imgpath = response.data.url;
-          // let input ={name:name};
-          // console.log(input);
-          // await axios.post('http://localhost:8000/Adminaddproduct' , input)
-
         }
     
         // Clear the selectedImages state after uploading
@@ -48,6 +46,8 @@ const AddProduct = () => {
       } catch (error) {
         console.error('Error in upload image', error);
       }
+      
+      navigate("/allproduct")
       // try {
         // Send product data to backend along with image URLs
         const sizesArray = ['S', 'M', 'L', 'XL'].map((label, index) => ({
@@ -125,6 +125,7 @@ const AddProduct = () => {
             <Option value="T-shirt">T-shirt</Option>
             <Option value="Jackets">Jackets</Option>
             <Option value="Pant">Pant</Option>
+            <Option value="Pant">Joggers</Option>
           </Select>
         </div>
 
