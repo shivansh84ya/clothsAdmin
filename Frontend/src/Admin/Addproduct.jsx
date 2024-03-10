@@ -19,15 +19,35 @@ const AddProduct = () => {
     const [price , setPrice] = useState("");
     const [RegPrice , setRegPrice] = useState("");
     const [Category , setCategory] = useState("");
-    const [sizes, setSizes] = useState(Array(4).fill(0));
-
+    const [sizes, setSizes] = useState({ S: 0, M: 0, L: 0, XL: 0 });
 
     const navigate = useNavigate();
 
 
+
+    const handleSizeDecrement = (size) => {
+      if (sizes[size] > 0) {
+        setSizes(prevSizes => ({
+          ...prevSizes,
+          [size]: prevSizes[size] - 1
+        }));
+      }
+    };
+    
+    const handleSizeIncrement = (size) => {
+      setSizes(prevSizes => ({
+        ...prevSizes,
+        [size]: prevSizes[size] + 1
+      }));
+    };
+
     const HandelProductSubmit = async () => {
       try {
         const formData = new FormData();
+        if (name === "" || desc === "" || price === "" || RegPrice === "" || Category === "") {
+          alert("Please fill in all the fields.");
+          return;
+      }
     
         // Append each selected file to the FormData object
         for (let i = 0; i < selectedImages.length; i++) {
@@ -49,11 +69,16 @@ const AddProduct = () => {
       
       navigate("/allproduct")
       // try {
-        // Send product data to backend along with image URLs
-        const sizesArray = ['S', 'M', 'L', 'XL'].map((label, index) => ({
+        const sizesArray = Object.entries(sizes).map(([label, quantity]) => ({
           label: label,
-          quantity: sizes[index] || 0 // Ensure quantity is set to 0 if not provided
-      }));
+          quantity: quantity || 0 // Ensure quantity is set to 0 if not provided
+        }));
+        // Send product data to backend along with image URLs
+      //   const sizesArray = ['S', 'M', 'L', 'XL'].map((label, index) => ({
+      //     label: label,
+      //     quantity: sizes[index] || 0 // Ensure quantity is set to 0 if not provided
+      // }));
+
         const productData = {
             name: name,
             description: desc,
@@ -64,7 +89,9 @@ const AddProduct = () => {
             images: selectedImages // Array of image URLs
         };
 
-        axios.post('http://localhost:8000/Adminaddproduct', productData).then(alert('Product added successfully!'))
+        console.log(productData);
+
+        axios.post('http://localhost:5000/Adminaddproduct', productData).then(alert('Product added successfully!'))
     }
     
     const handleImageChange = (e) => {
@@ -104,7 +131,7 @@ const AddProduct = () => {
 
   return (
     <div className="add-product-container">
-      <Typography.Title level={3} className="add-product-title">Add Product</Typography.Title>
+      <Typography.Title level={1} className="add-product-title " color='#b88a00' >Add Product</Typography.Title>
 
       <div className="form-container">
         <div className="form-row">
@@ -129,38 +156,40 @@ const AddProduct = () => {
           </Select>
         </div>
 
+
+
+
+
+
         <div className="form-row">
-          <label className='label'>Enter Size:</label>
-          <div className="size-options">
-            {['S', 'M', 'L', 'XL'].map((size, index) => ( // Changed the size options array to use 'S', 'M', 'L', 'XL'
-              <div key={index} className="size-option">
-                <span className='size-label'>{size}</span>
-                <Select
-                  className="size-select"
-                  defaultValue={0}
-                  onChange={(value) => {
-                    const newSizes = [...sizes]; // Create a copy of the sizes array
-                    newSizes[index] = value; // Update the value at the current index
-                    setSizes(newSizes); // Update the state
-                  }}
-                >
-                  {[...Array(10).keys()].map((key) => (
-                    <Option key={key} value={key}>{key}</Option>
-                  ))}
-                </Select>
-              </div>
-            ))}
+      <label className='label'>Enter Size:</label>
+      <div className="size-options">
+        {['S', 'M', 'L', 'XL'].map((size) => (
+          <div key={size} className="size-option">
+            <span className='size-label'>{size}</span>
+            <div className='size-qty'>
+              <Button onClick={() => handleSizeDecrement(size)}>-</Button>
+              <span>{sizes[size]}</span>
+              <Button onClick={() => handleSizeIncrement(size)}>+</Button>
+            </div>
           </div>
-        </div>
+        ))}
+      </div>
+    </div>
 
-        <div className="form-row">
-          <label className='label'>Product Price:</label>
-          <Input type="number" className="input-box" value={price} onChange={(e) => setPrice(e.target.value)}/>
-        </div>
 
+       
+
+        
         <div className="form-row">
-          <label className='label'>Regular Price:</label>
+          <label className='label'>Maximum Retail Price :</label>
           <Input type="number" className="input-box" value={RegPrice} onChange={(e) => setRegPrice(e.target.value)} />
+        </div>
+
+
+        <div className="form-row">
+          <label className='label'>Product Selling Price:</label>
+          <Input type="number" className="input-box" value={price} onChange={(e) => setPrice(e.target.value)}/>
         </div>
 
         <div className="form-row">

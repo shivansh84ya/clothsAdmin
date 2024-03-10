@@ -29,10 +29,10 @@ const Coupon = () =>{
 
     return (
         <>
+
+
           <center><h1 id="heading-coupon">Add Coupon Page</h1></center>
-
-
-<div className="productcontainer-coupon">
+<div className="productcontainer-coupon" style={{backgroundColor:"white",paddingBottom:"50px"}}>
 
           <label className="label-coupon">Add Coupon</label>  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input className="coupon-input" type="text" name="id" value={name.id} onChange={HandelNameChange} /><br/>
           <label className="label-coupon">Discount Range</label> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="range" className="coupon-input" value={name.range} onChange={HandelNameChange}/><br />

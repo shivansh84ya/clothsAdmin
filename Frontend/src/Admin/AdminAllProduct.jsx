@@ -10,7 +10,7 @@ const AllProductsPage = () => {
   // Fetching data from server
   const loadProductData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/AdminproductDisplay");
+      const response = await axios.get("http://localhost:5000/AdminproductDisplay");
       setProData(response.data);
     } catch (error) {
       console.log("Error while fetching data:", error);
@@ -24,7 +24,7 @@ const AllProductsPage = () => {
   const handleDeleteProduct = async (productId) => {
     try {
       // Make a DELETE request to your API endpoint to delete the product
-      await axios.delete(`http://localhost:8000/api/AdminProductModel/${productId}`);
+      await axios.delete(`http://localhost:5000/api/AdminProductModel/${productId}`);
       
       // Remove the deleted product from the state
       setProData(prevProData => prevProData.filter(product => product._id !== productId));
@@ -43,6 +43,8 @@ const AllProductsPage = () => {
 
   return (
     <div className='allproduct-container'>
+
+      <h1 style={{color:"#b88a00"}}>All Products </h1>
       {products}
     </div>
   );
