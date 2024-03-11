@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import React, { useState,useEffect } from 'react';
 import { Input, Select, Upload, Button, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './admin.css'; // Import the CSS file
-import { useNavigate } from "react-router-dom";
-
 import axios from 'axios';
+import ProductCard from './ProductCart';
+import { useNavigate,useLocation } from 'react-router-dom';
+import  {ThreeDots} from 'react-loader-spinner';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 const AddProduct = () => {
+
     const [selectedImages, setSelectedImages] = useState([]);
-    
     const [selectedFile , setSelectedFile] = useState(null);
     const [imgUrl, setImgUrl] = useState("");
     const [name , setName] = useState("");
@@ -19,11 +22,12 @@ const AddProduct = () => {
     const [price , setPrice] = useState("");
     const [RegPrice , setRegPrice] = useState("");
     const [Category , setCategory] = useState("");
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [sizes, setSizes] = useState({ S: 0, M: 0, L: 0, XL: 0 });
 
     const navigate = useNavigate();
-
-
+    const location = useLocation()
 
     const handleSizeDecrement = (size) => {
       if (sizes[size] > 0) {
@@ -41,97 +45,207 @@ const AddProduct = () => {
       }));
     };
 
-    const HandelProductSubmit = async () => {
-      try {
-        const formData = new FormData();
-        if (name === "" || desc === "" || price === "" || RegPrice === "" || Category === "") {
-          alert("Please fill in all the fields.");
-          return;
-      }
+  //   const HandelProductSubmit = async () => {
+  //     try {
+  //       const formData = new FormData();
+  //       // if (name === "" || desc === "" || price === "" || RegPrice === "" || Category === "") {
+  //       //   toast.error("Please fill in all the fields!")
+  //       //   return;
+  //     // }
     
-        // Append each selected file to the FormData object
-        for (let i = 0; i < selectedImages.length; i++) {
-          formData.append('file', selectedImages[i]);
-          formData.append("upload_preset", "qzdxlvuy");
-          formData.append("cloudName", "dkn4evown");
+  //       // Append each selected file to the FormData object
+  //       for (let i = 0; i < selectedImages.length; i++) {
+  //         formData.append('file', selectedImages[i]);
+  //         formData.append("upload_preset", "qzdxlvuy");
+  //         formData.append("cloudName", "dkn4evown");
     
-          const response = await axios.post("https://api.cloudinary.com/v1_1/dkn4evown/image/upload", formData);
-          console.log('Image Upload:', response.data);
-          console.log('Image URL:', response.data.url);
-          setImgUrl(response.data.url);
-        }
+  //         const response = await axios.post("https://api.cloudinary.com/v1_1/dkn4evown/image/upload", formData);
+  //         console.log('Image Upload:', response.data);
+  //         console.log('Image URL:', response.data.url);
+  //         setImgUrl(response.data.url);
+  //       }
     
-        // Clear the selectedImages state after uploading
-        setSelectedImages([]);
-      } catch (error) {
-        console.error('Error in upload image', error);
-      }
+  //       // Clear the selectedImages state after uploading
+  //       setSelectedImages([]);
+  //     } catch (error) {
+  //       console.error('Error in upload image', error);
+  //       toast.error('Error in upload image')
+  //     }
       
-      navigate("/allproduct")
-      // try {
-        const sizesArray = Object.entries(sizes).map(([label, quantity]) => ({
-          label: label,
-          quantity: quantity || 0 // Ensure quantity is set to 0 if not provided
-        }));
-        // Send product data to backend along with image URLs
-      //   const sizesArray = ['S', 'M', 'L', 'XL'].map((label, index) => ({
-      //     label: label,
-      //     quantity: sizes[index] || 0 // Ensure quantity is set to 0 if not provided
-      // }));
+  //     navigate("/allproduct")
+  //     // try {
+  //       const sizesArray = Object.entries(sizes).map(([label, quantity]) => ({
+  //         label: label,
+  //         quantity: quantity || 0 // Ensure quantity is set to 0 if not provided
+  //       }));
+  // }
 
-        const productData = {
-            name: name,
-            description: desc,
-            price: price,
-            regularPrice: RegPrice,
-            category: Category,
-            size: sizesArray,
-            images: selectedImages // Array of image URLs
-        };
+        const HandelProductSubmit = async () => {
+          setLoading(true);
+          try {
+            // If selectedProduct exists, it's an update; otherwise, it's an add
+            const url = selectedProduct
+              ? `http://localhost:5000/Adminupdateproduct/${selectedProduct._id}`
+              : "http://localhost:5000/Adminaddproduct";
+        
+            const formData = new FormData();
+        
+            // Append each selected file to the FormData object
+            for (let i = 0; i < selectedImages.length; i++) {
+              formData.append("file", selectedImages[i]);
+              formData.append("upload_preset", "qzdxlvuy");
+              formData.append("cloudName", "dkn4evown");
+        
+              const response = await axios.post(
+                "https://api.cloudinary.com/v1_1/dkn4evown/image/upload",
+                formData
+              );
+              console.log("Image Upload:", response.data);
+              console.log("Image URL:", response.data.url);
+              setImgUrl(response.data.url);
+            }
+        
+            // Clear the selectedImages state after uploading
+            setSelectedImages([]);
 
-        console.log(productData);
+            navigate("/allproduct")
+        
+            // Send product data to the appropriate endpoint
+            const sizesArray = Object.entries(sizes).map(([label, quantity]) => ({
+              label: label,
+              quantity: quantity || 0 // Ensure quantity is set to 0 if not provided
+            }));
 
-        axios.post('http://localhost:5000/Adminaddproduct', productData).then(alert('Product added successfully!'))
-    }
-    
-    const handleImageChange = (e) => {
-      const files = e.target.files;
-      setSelectedFile(e.target.files[0]);
-      const imageFiles = [];
-    
-      // Check if there are no files selected
-      if (files.length === 0) {
-        alert("Please select 4 images.");
-        return;
-      }
-    
-      // Loop through each selected file
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          // Push the data URL of the selected image into the imageFiles array
-          imageFiles.push(reader.result);
 
-          // If all files are processed and at least 4 images are selected, update the state with the array of image URLs
-          if (imageFiles.length === files.length && imageFiles.length === 4) {
-            setSelectedImages(imageFiles);
-          } else if (imageFiles.length < 4 && i === files.length - 1) {
-            alert("Please select at least 4 images.");
-            e.target.value = "";
-          } else if ( imageFiles.length > 4){
-            alert("Please select less than 4 images.");
-            e.target.value = "";
+            const productData = {
+              name: name,
+              description: desc,
+              price: price,
+              regularPrice: RegPrice,
+              category: Category,
+              size: sizesArray,
+              images: selectedImages,
+            };
+        
+            const axiosConfig = {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+        
+            // Use PUT method for updates
+            // alert("Product added success");
+            setLoading(false);
+            const response = await axios.post(url, productData, axiosConfig);
+            
+        
+            if (selectedProduct) {
+              setSelectedProduct(null);
+              
+              // console.log("Product updated successfully!");
+              // alert("Product updated successfully!");
+              toast.success('"Product updated successfully!')
+              
+            } else {
+              console.log("Before confirmation: Product added successfully!");
+              if (window.confirm("Product added successfully!")) {
+                console.log("After confirmation: Product added successfully!");
+              }
+            }
+            
+            
+          } catch (error) {
+            console.error("Error:", error);
+            setLoading(false);
+            // alert("Error adding/updating product. Please try again.");
+            toast.error('Error adding/updating product. Please try again.')
           }
         };
-        reader.readAsDataURL(files[i]);
-      }
-      
-    };
+        
+        
+        
+        useEffect(() => {
+          // Access product data from location state
+          const data = location.state && location.state.productData;
+          if (data) {
+            // Set state based on the product data if available
+            setSelectedProduct(data);
+            setName(data.name);
+            setDesc(data.description);
+            setCategory(data.category);
+            setSizes(data.size.map((size) => size.quantity));
+            setPrice(data.price);
+            setRegPrice(data.regularPrice);
+            setSelectedImages(data.images);
+          }
+        }, [location.state]);
+
+    
+        const handleImageChange = async (e) => {
+          const files = e.target.files;
+          setSelectedFile(e.target.files[0]);
+          const imageFiles = [];
+        
+          // Check if there are no files selected
+          if (files.length === 0) {
+            toast.error("Please select images.");
+            return;
+          }
+        
+          try {
+            // Loop through each selected file
+            for (let i = 0; i < files.length; i++) {
+              const formData = new FormData();
+              formData.append("file", files[i]);
+              formData.append("upload_preset", "qzdxlvuy");
+              formData.append("cloudName", "dkn4evown");
+        
+              const response = await axios.post(
+                "https://api.cloudinary.com/v1_1/dkn4evown/image/upload",
+                formData
+              );
+              console.log("Image Upload:", response.data);
+              console.log("Image URL:", response.data.url);
+              imageFiles.push(response.data.url);
+            }
+        
+            // If all files are processed and at least one image is uploaded
+            if (imageFiles.length > 0) {
+              setSelectedImages(imageFiles);
+              toast.success("Images uploaded successfully");
+            }
+          } catch (error) {
+            console.error("Error uploading images:", error);
+            toast.error("Error uploading images. Please try again.");
+          }
+        };
+        
     
 
+    const onUpdateProduct = (product) => {
+      // Set the state with the selected product data
+      setSelectedProduct(product);
+  
+      // Set other state variables based on the selected product data
+      setName(product.name);
+      setDesc(product.description);
+      setCategory(product.category);
+      setSizes(product.size.map((size) => size.quantity));
+      setPrice(product.price);
+      setRegPrice(product.regularPrice);
+  
+      // Navigate to the AddProduct page
+      navigate('/addproduct', { state: { productData: product}});
+    };
+
+
+
   return (
+
     <div className="add-product-container">
-      <Typography.Title level={1} className="add-product-title " color='#b88a00' >Add Product</Typography.Title>
+      <Typography.Title level={3} className="add-product-title">
+      {selectedProduct ? 'Update Product' : 'Add Product'}
+    </Typography.Title>
 
       <div className="form-container">
         <div className="form-row">
@@ -144,9 +258,9 @@ const AddProduct = () => {
           <TextArea className="input-box" rows={4} value={desc} onChange={(e) => setDesc(e.target.value)} />
         </div>
 
-        <div className="form-row">
-          <label className='label'>Product Category:</label> 
-          <Select className="select-box" defaultValue="Category" onChange={(value) => setCategory(value)} >
+    <div className="form-row">
+        <label className='label'>Product Category:</label> 
+          <Select className="select-box" value={Category} onChange={(value) => setCategory(value)} >
             <Option value="Jeans">Jeans</Option>
             <Option value="Shirt">Shirt</Option>
             <Option value="T-shirt">T-shirt</Option>
@@ -154,14 +268,11 @@ const AddProduct = () => {
             <Option value="Pant">Pant</Option>
             <Option value="Pant">Joggers</Option>
           </Select>
-        </div>
+     </div>
 
 
 
-
-
-
-        <div className="form-row">
+    {/* <div className="form-row">
       <label className='label'>Enter Size:</label>
       <div className="size-options">
         {['S', 'M', 'L', 'XL'].map((size) => (
@@ -169,16 +280,37 @@ const AddProduct = () => {
             <span className='size-label'>{size}</span>
             <div className='size-qty'>
               <Button onClick={() => handleSizeDecrement(size)}>-</Button>
-              <span>{sizes[size]}</span>
+              <span >{sizes[size]}</span>  
               <Button onClick={() => handleSizeIncrement(size)}>+</Button>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </div> */}
+
+<div className="form-row">
+  <label className='label'>Enter Size:</label>
+  <div className="size-options">
+    {Object.entries(sizes).map(([size, quantity]) => (
+      <div key={size} className="size-option">
+        <span className='size-label'>{size}</span>
+        <div className='size-qty'>
+          <Button onClick={() => handleSizeDecrement(size)}>-</Button>
+          <span>{quantity}</span> {/* Display the quantity */}
+          <Button onClick={() => handleSizeIncrement(size)}>+</Button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
 
        
+        <div className="form-row">
+          <label className='label'>Product Selling Price:</label>
+          <Input type="number" className="input-box" value={price} onChange={(e) => setPrice(e.target.value)}/>
+        </div>
 
         
         <div className="form-row">
@@ -187,14 +319,11 @@ const AddProduct = () => {
         </div>
 
 
-        <div className="form-row">
-          <label className='label'>Product Selling Price:</label>
-          <Input type="number" className="input-box" value={price} onChange={(e) => setPrice(e.target.value)}/>
-        </div>
 
         <div className="form-row">
         </div>
         <div className="image-uploader">
+
       {[1].map(index => (
         <div key={index}>
           <label htmlFor={`image${index}`} >Select Image</label>
@@ -202,22 +331,35 @@ const AddProduct = () => {
           {/* <input type="file" id={`image${index}`} multiple name={`image${index}`} accept="image/*" style={{marginLeft:"25px"}} required onChange={handleImageChange} /> */}
         </div>
       ))}
+
       <div className="image-preview">
         {selectedImages.map((imageUrl, index) => (
           <img key={index} src={imageUrl} alt={`Selected Image ${index}`} className="preview-image"  />
         ))}
       </div>
       
-      {/* <Button type="primary" onClick={ImageUploader}>Upload Images</Button> */}
     </div>
         </div>
 
-        <Button type="primary" className="add-product-button" onClick={HandelProductSubmit}>Add Product</Button>
+        <Button type="primary" className="add-product-button" onClick={HandelProductSubmit}>
+        {selectedProduct ? 'Update Product' : 'Add Product'}
+      </Button>
+
+      <ProductCard product={selectedProduct} onUpdate={onUpdateProduct} />
+
+      {loading && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <ThreeDots type="Puff" color="#ffc107" height={100} width={100} />
+          </div>
+       </div>
+      )}
       </div>
 
-      
+   
     // </div>
   );
+
 }
 
 export default AddProduct;

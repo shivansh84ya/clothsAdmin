@@ -11,7 +11,9 @@ import AllOrdersPage from "./Admin/AdminOrders";
 // import Product from "./Components/Product";
 // import Categories from "./Components/Categories";
 // import AboutUs from "./Components/AboutUs";
-import YourComponent from "./Admin/AdminHome"
+import YourComponent from "./Admin/AdminHome";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App=()=>{
@@ -30,6 +32,7 @@ const App=()=>{
       <Route path="/users" element={<Users/>}/>
       </Route>
      </Routes>
+     <ToastContainer />
      </BrowserRouter>
  
 

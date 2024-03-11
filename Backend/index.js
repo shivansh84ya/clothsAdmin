@@ -1,4 +1,4 @@
-const express = require("express")
+    const express = require("express")
 const mongoose = require("mongoose")
 const dotenv=require("dotenv");
 const app = express();
@@ -6,8 +6,8 @@ const app = express();
 const bodyParser = require('body-parser');
 
 // Adjust the limit option according to your requirements
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '20mb' }));
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 
 const cors= require("cors");
 app.use(cors());
