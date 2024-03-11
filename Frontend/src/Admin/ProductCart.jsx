@@ -31,9 +31,9 @@ const ProductCard = ({ product ,onUpdate,onDeleteProduct}) => {
     setIsOutOfStock(!isOutOfStock
 );
     if (isOutOfStock) {
-      toast.success('Product is now in stock');
+      toast.success('Product is now in stock!');
     } else {
-      toast.error('Product is now out of stock');
+      toast.error('Product is now out of stock!');
     }
   };
 
