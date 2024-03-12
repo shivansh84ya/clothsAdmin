@@ -15,6 +15,7 @@ const Layout=()=>{
             <li><Link className="lin" to="AdminDashboard">Dashboard</Link></li>
             <li><Link className="lin" to="allproduct">All Product</Link></li>
             <li><Link className="lin" to="addproduct">Add Product</Link></li>
+            <li><Link className="lin" to="addbrand">Add Brand</Link></li>
             <li><Link className="lin" to="allorder">Orders</Link></li>
             <li><Link className="lin" to="coupon">Add Coupon</Link></li>
             <li><Link className="lin" to="users">Users</Link></li>

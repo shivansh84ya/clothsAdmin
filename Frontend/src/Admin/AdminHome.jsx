@@ -71,6 +71,12 @@ const YourComponent = () => {
             </li>
             <li className="nav-link">
               <a href="#">
+                <i className="bx bx-plus icons"></i>
+               <Link className="text nav-text" to="addbrand">Add Brand</Link>
+              </a>
+            </li>
+            <li className="nav-link">
+              <a href="#">
                 <i className="bx bx-pie-chart-alt icons"></i>
                <Link className="text nav-text"  to="allorder">Orders</Link>
               </a>  

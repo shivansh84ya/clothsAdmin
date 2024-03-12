@@ -2,7 +2,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useState,useEffect } from 'react';
 import { Input, Select, Upload, Button, Typography } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import './admin.css'; // Import the CSS file
 import axios from 'axios';
 import ProductCard from './ProductCart';
@@ -17,17 +16,68 @@ const AddProduct = () => {
     const [selectedImages, setSelectedImages] = useState([]);
     const [selectedFile , setSelectedFile] = useState(null);
     const [imgUrl, setImgUrl] = useState("");
-    const [name , setName] = useState("");
+    const [name , setName] = useState("Select Brand Name");
     const [desc , setDesc] = useState("");
     const [price , setPrice] = useState("");
     const [RegPrice , setRegPrice] = useState("");
-    const [Category , setCategory] = useState("");
+    const [Category , setCategory] = useState("Select Brand Category");
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [loading, setLoading] = useState(false);
     const [sizes, setSizes] = useState({ S: 0, M: 0, L: 0, XL: 0 });
-
+    const [newBrand, setNewBrand] = useState(""); // State for the new brand input
+    const [brands, setBrands] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [newCategory, setNewCategory] = useState("");
+    
     const navigate = useNavigate();
     const location = useLocation()
+
+    
+  useEffect(() => {
+    const fetchBrandsAndCategories = async () => {
+      try {
+        const brandsResponse = await axios.get("http://localhost:5000/getbrand");
+        setBrands(brandsResponse.data);
+
+        const categoriesResponse = await axios.get("http://localhost:5000/getbrand");
+        setCategories(categoriesResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchBrandsAndCategories();
+  }, []);
+
+  const handleAddBrand = async () => {
+    if (newBrand.trim() !== "") {
+      try {
+        const response = await axios.post("http://localhost:5000/addBrand", { brand: newBrand });
+        setBrands([...brands, response.data.brand]);
+        setNewBrand(""); // Clear the new brand input field
+        toast.success("Brand added successfully!");
+      } catch (error) {
+        console.error("Error adding brand:", error);
+        toast.error("Error adding brand. Please try again.");
+      }
+    }
+  };
+
+  const handleAddCategory = async () => {
+    if (newCategory.trim() !== "") {
+      try {
+        const response = await axios.post("http://localhost:5000/addBrand", { category: newCategory });
+        setCategories([...categories, response.data.category]);
+        setNewCategory(""); // Clear the new category input field
+        toast.success("Category added successfully!");
+      } catch (error) {
+        console.error("Error adding category:", error);
+        toast.error("Error adding category. Please try again.");
+      }
+    }
+  };
+
+
 
     const handleSizeDecrement = (size) => {
       if (sizes[size] > 0) {
@@ -80,7 +130,7 @@ const AddProduct = () => {
   //       }));
   // }
 
-        const HandelProductSubmit = async () => {
+     const HandelProductSubmit = async () => {
           setLoading(true);
           try {
             // If selectedProduct exists, it's an update; otherwise, it's an add
@@ -160,11 +210,11 @@ const AddProduct = () => {
             // alert("Error adding/updating product. Please try again.");
             toast.error('Error adding/updating product. Please try again.')
           }
-        };
+    };
         
         
         
-        useEffect(() => {
+    useEffect(() => {
           // Access product data from location state
           const data = location.state && location.state.productData;
           if (data) {
@@ -178,10 +228,10 @@ const AddProduct = () => {
             setRegPrice(data.regularPrice);
             setSelectedImages(data.images);
           }
-        }, [location.state]);
+    }, [location.state]);
 
     
-        const handleImageChange = async (e) => {
+    const handleImageChange = async (e) => {
           const files = e.target.files;
           setSelectedFile(e.target.files[0]);
           const imageFiles = [];
@@ -218,10 +268,8 @@ const AddProduct = () => {
             console.error("Error uploading images:", error);
             toast.error("Error uploading images. Please try again.");
           }
-        };
+    };
         
-    
-
     const onUpdateProduct = (product) => {
       // Set the state with the selected product data
       setSelectedProduct(product);
@@ -248,27 +296,61 @@ const AddProduct = () => {
     </Typography.Title>
 
       <div className="form-container">
-        <div className="form-row">
+        {/* <div className="form-row">
           <label className='label'>Product Name:</label>
           <Input className="input-box" value={name} onChange={(e) => setName(e.target.value)}/>
+        </div> */}
+
+        <div className="form-row">
+          <label className='label'>Product Brand:</label>
+          
+          <Select className="select-box" value={name} onChange={(value) => setName(value)}>
+            {brands.map((brand) => (
+              <Option key={brand._id} value={brand.brand}>{brand.brand}</Option>
+            // <Option key="addNew" value="Add New Brand">Add New Brand</Option>
+          ))}
+
+          </Select>
+          <Input
+            className="input-box"
+            placeholder="Enter new brand name"
+            value={newBrand}
+            onChange={(e) => setNewBrand(e.target.value)}
+          />
+          <Button type="primary" onClick={handleAddBrand}>Add Brand</Button>
         </div>
+
 
         <div className="form-row">
           <label className='label'>Product Description:</label>
           <TextArea className="input-box" rows={4} value={desc} onChange={(e) => setDesc(e.target.value)} />
         </div>
 
-    <div className="form-row">
-        <label className='label'>Product Category:</label> 
-          <Select className="select-box" value={Category} onChange={(value) => setCategory(value)} >
-            <Option value="Jeans">Jeans</Option>
-            <Option value="Shirt">Shirt</Option>
-            <Option value="T-shirt">T-shirt</Option>
-            <Option value="Jackets">Jackets</Option>
-            <Option value="Pant">Pant</Option>
-            <Option value="Pant">Joggers</Option>
-          </Select>
-     </div>
+        {/* 
+      <div className="form-row">
+          <label className='label'>Product Category:</label> 
+            <Select className="select-box" value={Category} onChange={(value) => setCategory(value)} >
+              <Option value="Jeans">Jeans</Option>
+              <Option value="Shirt">Shirt</Option>
+              <Option value="T-shirt">T-shirt</Option>
+              <Option value="Jackets">Jackets</Option>
+              <Option value="Pant">Pant</Option>
+              <Option value="Pant">Joggers</Option>
+            </Select>
+      </div> */}
+
+
+                                                                                           
+      <Select className="select-box" defaultValue="Select Category" style={{ width: 910 }}>
+        {categories.map((category) => (
+          <Option key={category._id} value={category.category}>{category.category}</Option>
+        ))}
+      </Select>
+
+      <Input value={newCategory}  placeholder="Enter new category name" onChange={(e)  => setNewCategory(e.target.value)} />
+      <Button onClick={handleAddCategory}>Add Category</Button>
+
+
 
 
 
@@ -288,21 +370,21 @@ const AddProduct = () => {
       </div>
     </div> */}
 
-<div className="form-row">
-  <label className='label'>Enter Size:</label>
-  <div className="size-options">
-    {Object.entries(sizes).map(([size, quantity]) => (
-      <div key={size} className="size-option">
-        <span className='size-label'>{size}</span>
-        <div className='size-qty'>
-          <Button onClick={() => handleSizeDecrement(size)}>-</Button>
-          <span>{quantity}</span> {/* Display the quantity */}
-          <Button onClick={() => handleSizeIncrement(size)}>+</Button>
+        <div className="form-row">
+          <label className='label'>Enter Size:</label>
+          <div className="size-options">
+            {Object.entries(sizes).map(([size, quantity]) => (
+              <div key={size} className="size-option">
+                <span className='size-label'>{size}</span>
+                <div className='size-qty'>
+                  <Button onClick={() => handleSizeDecrement(size)}>-</Button>
+                  <span>{quantity}</span> {/* Display the quantity */}
+                  <Button onClick={() => handleSizeIncrement(size)}>+</Button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
 
 
 
