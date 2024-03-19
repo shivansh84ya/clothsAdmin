@@ -36,7 +36,7 @@ const AllProductsPage = () => {
       await axios.delete(`http://localhost:5000/api/AdminProductModel/${productId}`);
       // Remove the deleted product from the state
       setProData(prevProData => prevProData.filter(product => product._id !== productId));
-      toast.error("Product deleted successfully!"); 
+      toast.success("Product deleted successfully!"); 
       // Notify user that product was deleted successfully
     } catch (error) {
       console.error('Error deleting product:', error);

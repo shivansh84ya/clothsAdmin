@@ -26,20 +26,56 @@ const AddProduct = () => {
     const [sizes, setSizes] = useState({ S: 0, M: 0, L: 0, XL: 0 });
     const [newBrand, setNewBrand] = useState(""); // State for the new brand input
     const [brands, setBrands] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState("");
+    const [categories, setCategories] = useState([]);
+    const [updateFlag, setUpdateFlag] = useState(false);
     
     const navigate = useNavigate();
     const location = useLocation()
 
+    
+
+
+    const handleAddBrand = async () => {
+      if (newBrand.trim() !== "") {
+        try {
+          const response = await axios.post("http://localhost:5000/addbrand", { brand: newBrand });
+          setBrands([...brands, response.data.brand]); // Update brands state with new brand
+          setNewBrand(""); // Clear the new brand input field
+          toast.success("Brand added successfully!");
+          setUpdateFlag(prevFlag => !prevFlag)
+        } catch (error) {
+          console.error("Error adding brand:", error);
+          toast.error("Error adding brand. Please try again.");
+        }
+      }
+    };
+    
+    const handleAddCategory = async () => {
+      if (newCategory.trim() !== "") {
+        try {
+          const response = await axios.post("http://localhost:5000/addcatogory", { category: newCategory });
+          setCategories([...categories, response.data.category]); // Update categories state with new category
+          setNewCategory(""); // Clear the new category input field
+          toast.success("Category added successfully!");
+          setUpdateFlag(prevFlag => !prevFlag)
+        } catch (error) {
+          console.error("Error adding category:", error);
+          toast.error("Error adding category. Please try again.");
+        }
+      }
+    };
+
+    
     
   useEffect(() => {
     const fetchBrandsAndCategories = async () => {
       try {
         const brandsResponse = await axios.get("http://localhost:5000/getbrand");
         setBrands(brandsResponse.data);
+        // setUpdateFlag(prevFlag => !prevFlag)
 
-        const categoriesResponse = await axios.get("http://localhost:5000/getbrand");
+        const categoriesResponse = await axios.get("http://localhost:5000/getcatogory");
         setCategories(categoriesResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,35 +83,7 @@ const AddProduct = () => {
     };
 
     fetchBrandsAndCategories();
-  }, []);
-
-  const handleAddBrand = async () => {
-    if (newBrand.trim() !== "") {
-      try {
-        const response = await axios.post("http://localhost:5000/addBrand", { brand: newBrand });
-        setBrands([...brands, response.data.brand]);
-        setNewBrand(""); // Clear the new brand input field
-        toast.success("Brand added successfully!");
-      } catch (error) {
-        console.error("Error adding brand:", error);
-        toast.error("Error adding brand. Please try again.");
-      }
-    }
-  };
-
-  const handleAddCategory = async () => {
-    if (newCategory.trim() !== "") {
-      try {
-        const response = await axios.post("http://localhost:5000/addBrand", { category: newCategory });
-        setCategories([...categories, response.data.category]);
-        setNewCategory(""); // Clear the new category input field
-        toast.success("Category added successfully!");
-      } catch (error) {
-        console.error("Error adding category:", error);
-        toast.error("Error adding category. Please try again.");
-      }
-    }
-  };
+  }, [updateFlag]);
 
 
 
@@ -341,11 +349,20 @@ const AddProduct = () => {
 
 
                                                                                            
-      <Select className="select-box" defaultValue="Select Category" style={{ width: 910 }}>
-        {categories.map((category) => (
-          <Option key={category._id} value={category.category}>{category.category}</Option>
-        ))}
-      </Select>
+      <label className='label'>Product Categories:</label>
+      <Select
+  className="select-box"
+  value={Category}
+  onChange={(value) => setCategory(value)}
+>
+  <Option value="Select Brand Category">Select Brand Category</Option>
+  {/* Map through categories and render each as an Option */}
+  {categories.map((category) => (
+    <Option key={category._id} value={category.category}>
+      {category.category}
+    </Option>
+  ))}
+</Select>
 
       <Input value={newCategory}  placeholder="Enter new category name" onChange={(e)  => setNewCategory(e.target.value)} />
       <Button onClick={handleAddCategory}>Add Category</Button>
@@ -421,6 +438,9 @@ const AddProduct = () => {
       </div>
       
     </div>
+
+
+    
         </div>
 
         <Button type="primary" className="add-product-button" onClick={HandelProductSubmit}>
