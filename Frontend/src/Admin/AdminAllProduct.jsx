@@ -45,14 +45,10 @@ const AllProductsPage = () => {
     }
   };
 
-
-
-  
-
   const products = proData.map((product, index) => (
     <div key={index} className="productRow">
-      <ProductCard product={product} onDeleteProduct={handleDeleteProduct}  />
-      <ProductCard product={product} onUpdate={handleUpdate}/>
+      <ProductCard product={product} onDeleteProduct={handleDeleteProduct} onUpdate={handleUpdate} />
+      {/* <ProductCard product={product} /> */}
 
     </div>
   ));

@@ -43,6 +43,8 @@ const AddProduct = () => {
           setBrands([...brands, response.data.brand]); // Update brands state with new brand
           setNewBrand(""); // Clear the new brand input field
           toast.success("Brand added successfully!");
+   
+
           setUpdateFlag(prevFlag => !prevFlag)
         } catch (error) {
           console.error("Error adding brand:", error);
@@ -220,8 +222,7 @@ const AddProduct = () => {
           }
     };
         
-        
-        
+
     useEffect(() => {
           // Access product data from location state
           const data = location.state && location.state.productData;
@@ -362,7 +363,11 @@ const AddProduct = () => {
       {category.category}
     </Option>
   ))}
+
+
+
 </Select>
+
 
       <Input value={newCategory}  placeholder="Enter new category name" onChange={(e)  => setNewCategory(e.target.value)} />
       <Button onClick={handleAddCategory}>Add Category</Button>

@@ -12,7 +12,7 @@ import AllOrdersPage from "./Admin/AdminOrders";
 // import Categories from "./Components/Categories";
 // import AboutUs from "./Components/AboutUs";
 import YourComponent from "./Admin/AdminHome";
-import AddBrandName from "./Admin/AddBrandName";
+// import AddBrandName from "./Admin/AddBrandName";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -28,7 +28,7 @@ const App=()=>{
       <Route path="/AdminDashboard" element={<Dashboard/>}/>
       <Route path="/addproduct" element={<AddProduct/>}/>
       <Route path="/allProduct" element={<AllProductsPage/>}/>
-      <Route path="/addbrand" element={<AddBrandName/>}/>
+      {/* <Route path="/addbrand" element={<AddBrandName/>}/> */}
       <Route path="/allorder" element={<AllOrdersPage/>}/>
       <Route path="/coupon" element={<Coupon/>}/>
       <Route path="/users" element={<Users/>}/>
